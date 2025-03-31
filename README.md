@@ -96,12 +96,14 @@
 
 8️⃣ What happens in root.render() ?
     In HTML,
-        <body>
-            <h1>Hello</h1>
-            <div id = "root">
-                <h2>..................</h2>
-            </div>
-        </body>
+    
+            <body>
+                <h1>Hello</h1>
+                <div id = "root">
+                    <h2>..................</h2>
+                </div>
+            </body>
+            
     In App.js
         const heading = React.createElement("p",{id:"para"},"This is paragraph")
         const root = ReactDOM.createRoot(document.getElementById("root"));
