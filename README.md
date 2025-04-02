@@ -110,4 +110,113 @@
 
 9️⃣ Library vs framework
     React can even work in small places like within header, or in footer, or within nav, or within menu etc.,  -- work even on small portion of project unlike framework
+    A key difference between the two is Inversion of control. When using a library, the control remains with the developer who tells the application when to call library functions. When using a framework, the control is reversed, which means that the framework tells the developer where code needs to be provided and calls it as it requires.
 
+1️⃣0️⃣ NPM:
+
+    npm is a package manager for the JavaScript programming language maintained by npm, Inc., a subsidiary of GitHub. npm is the default package manager for the JavaScript runtime environment Node.js and is included as a recommended feature in the Node.js installer.[4]
+
+    It consists of a command line client, also called npm, and an online database of public and paid-for private packages, called the npm registry. The registry is accessed via the client, and the available packages can be browsed and searched via the npm website. The package manager and the registry are managed by npm, Inc.
+
+1️⃣1️⃣ npm init <initializer> vs npm init
+
+    npm init <initializer> ---> uses create-<initializer> package to create a new project; npm init <initializer> runs as npx create-<initailzer> name_of_the_project
+    This will automatically setup the basic structure(necessary project files) of project so that developers won't need to create it from scratch.
+
+    Ex: npm init react-app my-app ➡️ npx create-react-app my-app ➡️ creates a basic react project structure
+        my-app/
+            ├── node_modules/
+            ├── public/
+            ├── src/
+            ├── package.json
+            ├── .gitignore
+            ├── README.md
+    npm init  ---> The command npm init is used to create a new package.json file for your project, which is essential for managing dependencies and scripts. Its like creating a project structure but with no packages to install( or like initializing create-  nothing)
+
+1️⃣2️⃣ Package.json
+
+    package.json is a configuration file in a Node.js project that stores important project information such as:
+
+        Project metadata (name, version, description, author, etc.).
+
+        Dependencies (packages needed for the project).
+
+        Scripts (commands to run tasks like starting a server).
+
+    USES:
+
+        ✅ Manages dependencies → Keeps track of installed packages.
+        ✅ Automates scripts → Simplifies commands like npm start or npm test.
+        ✅ Project metadata → Documents project details.
+        ✅ Version control → Helps maintain package versions.
+
+    
+    No package.json	➡️ npm does nothing and shows a warning.
+    Empty package.json	➡️ npm does nothing but creates node_modules/ and package-lock.json.
+    package.json with dependencies	➡️ npm installs dependencies into node_modules/.
+
+1️⃣3️⃣ Tilde (~) vs. Caret (^) in package.json
+
+    These symbols tell npm how to handle updates to those packages.
+
+    A version number has three parts: MAJOR.MINOR.PATCH
+
+        MAJOR: Breaking changes.
+
+        MINOR: New features, backward compatible.
+
+        PATCH: Bug fixes, backward compatible.
+
+    Tilde (~)
+
+        The tilde (~) matches the most recent PATCH version.
+
+        It allows npm to update to the latest patch release but not to a new minor release.
+
+        For example, if you have ~1.2.3, npm can update to 1.2.4, 1.2.5, etc., but not to 1.3.0.
+
+    Caret (^)
+
+        The caret (^) is more flexible. It matches the most recent MINOR version.
+
+        It allows npm to update to new minor and patch releases but not to a new major release.
+
+        For example, if you have ^1.2.3, npm can update to 1.3.0, 1.4.2, etc., but not to 2.0.0.
+
+    Want to Lock a Version?
+        To prevent updates entirely, use an exact version:
+        "express": "4.18.2" ➡️ This means only 4.18.2 will be installed—no updates at all.
+
+1️⃣4️⃣ Package-lock.json
+
+    package-lock.json is an automatically generated file that locks the exact versions of installed dependencies. It ensures that everyone working on a project gets the same versions of packages.
+
+    If you change dependencies in package.json, npm updates package-lock.json when running npm install.
+
+    USES:
+
+    ✅ Ensures Consistency – Guarantees the same dependencies are installed across different environments.
+    ✅ Faster Installs – npm uses the lock file to install dependencies more efficiently.
+    ✅ Prevents Unexpected Updates – Even if a package has a newer version, npm installs the exact version from package-lock.json.
+
+    package.json	➡️  Defines dependencies with version ranges (^4.18.2, ~4.18.2).
+    package-lock.json	➡️  Locks exact versions (4.18.2) to ensure consistency.
+
+1️⃣5️⃣ What Are Transitive Dependencies?
+
+    Transitive dependencies are dependencies of the dependencies in package.json — packages that are automatically installed because they are required by other packages.
+
+    For Example:
+
+        You installed react
+
+        react depends on scheduler
+
+        scheduler depends on other internal packages
+
+        react also depends on react-dom, which has its own transitive dependencies
+
+1️⃣6️⃣ Bundlers:
+
+    webpack, parcel, veet etc.,
+    https://dev.to/sayanide/the-what-why-and-how-of-javascript-bundlers-4po9#:~:text=Bundlers%20are%20not%20transpilers,-Firstly%2C%20let's%20clarify&text=A%20JavaScript%20bundler%20is%20a,and%20improve%20page%20load%20performance.
