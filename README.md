@@ -220,6 +220,7 @@
 
 1️⃣6️⃣ Bundlers:
 
+    A bundler is a tool that bundles our app, packages our app so that it can be shipped to production.
     webpack, parcel, veet etc.,
     https://dev.to/sayanide/the-what-why-and-how-of-javascript-bundlers-4po9#:~:text=Bundlers%20are%20not%20transpilers,-Firstly%2C%20let's%20clarify&text=A%20JavaScript%20bundler%20is%20a,and%20improve%20page%20load%20performance.
 
@@ -229,6 +230,7 @@
     1. zero config ➡️ No need of any configuration setups to execute parcel - just npx parcel index.html will build the app
     2. Dev server ➡️ Parcel’s builtin dev server is automatically started when you run the default parcel command. By default, it starts a server at http://localhost:1234. If port 1234 is already in use, then a fallback port will be used.
     3. HMR (Hot Module Replacement) ➡️ As you make changes to your code, Parcel automatically rebuilds the changed files and updates your app in the browser. By default, Parcel fully reloads the page, but in some cases it may perform Hot Module Replacement (HMR). HMR improves the development experience by updating modules in the browser at runtime without needing a whole page refresh. This means that application state can be retained as you change small things in your code.CSS changes are automatically applied via HMR with no page reload necessary. 
+    There is File Watcher Algorithm (written in C++). It keeps track of all the files which are changing realtime and it tells the server to reload.
     4. Diagnostics ➡️ If you make an error in your code or configuration, Parcel displays beautiful diagnostics in your terminal and in the browser.
     5.Reliable caching ➡️ Parcel automatically tracks all of the files, configuration, plugins, and dev dependencies that are involved in your build, and granularly invalidates the cache when something changes. It integrates with low-level operating system APIs to determine what files have changed in milliseconds, no matter the project size.
     6.Lazy dev builds ➡️ In development, Parcel can defer building files until they are requested in the browser.
@@ -244,7 +246,15 @@
 
 1️⃣8️⃣ Dist folder
      once the build is done - whatever we are seeing in browser comes from the dist folder - not from the files(like index.html or app.js) - everytime build is done - dist folder is regenerated. (since so, exclude it from adding to github - put it in .gitignore file)
+     It keeps the files minified for us. When bundler builds the app, the build goes into a folder called dist. The `/dist` folder contains the minimized and optimised version the source code.
+
      Also, .parcel-cache folder is created - parcel enables faster dev builds because of caching   - it is also regenerable at every build 
      ❌❌❌❌❌❌❌(imp) ➡️ parcel-cache is used by parcel(bundler) to reduce the building time. It stores information about your project when parcel builds it, so that when it rebuilds, it doesn't have to re-parse and re-analyze everything from scratch. ❌❌❌❌❌❌❌
 
      "browserlist":[] in package.json ➡️ to configure the browser that our app could support
+     Browserslist is a tool that specifies which browsers should be supported/compatible in your frontend app. It makes our code compatible for a lot of browsers. 
+
+1️⃣9️⃣ "Script" Section in Package.json
+    The scripts section is a key in package.json where you define shortcut commands to run tasks like starting a server, building a project, testing, or deploying.
+    ⭐npm run <script-name>⭐
+    ⭐ npm start and npm test works without "run" word because "start" and "test" are special scripts in npm.
