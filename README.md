@@ -255,6 +255,98 @@
      Browserslist is a tool that specifies which browsers should be supported/compatible in your frontend app. It makes our code compatible for a lot of browsers. 
 
 1️⃣9️⃣ "Script" Section in Package.json
+
     The scripts section is a key in package.json where you define shortcut commands to run tasks like starting a server, building a project, testing, or deploying.
+
     ⭐npm run <script-name>⭐
-    ⭐ npm start and npm test works without "run" word because "start" and "test" are special scripts in npm.
+
+    ❌❌npm start and npm test works without "run" word because "start" and "test" are special scripts in npm.❌❌
+
+    What is another way of starting the build of the project? -----> By creating scripts instead of using “npx parcel index.html”. We can create different scripts for starting our project in Development and Production.
+
+2️⃣0️⃣ React Element:
+
+    const heading = React.createElement("h1",{},"Welcome!)  -----> refer 7th point above
+
+    React.createElement  returns an js object
+    Upon rendering , react element(which is an object)  --->converts to HTML element
+
+    <div id = 'root'>
+        <h1>Not rendered</h1>
+    </div>
+
+    const root = ReactDOM.createRoot("document.getElementById("root"));
+    root.render(heading)
+
+
+
+    🔺whatever happens in react, happens in root
+    🔺Upon rendering, ReactDOM takes react element and turns it into HTML nad sends to browser
+    🔺Element rendered( heading element) replaces (❌NOT APPENDED❌) the <h1> tag inside the <div> that has id = "root"
+
+    TL;DR ➡️ A React element is a JavaScript object that tells React what to render and how it should look.A React element is not the same as a DOM element (it’s just a description of what should be rendered).
+
+    React elements are immutable. Once created, they can’t be changed. This immutability helps React do fast comparisons during rendering because it knows any change requires a new object. This makes UIs more predictable and improves performance with techniques like memoization and pure rendering.
+    
+
+2️⃣1️⃣ HTML Elements vs React Elements
+
+    React elements are not actual DOM nodes, but plain JavaScript objects that describe what should appear on the screen. They're created via JSX or React.createElement() and are used by React’s virtual DOM for efficient updates.
+
+    In contrast, HTML elements are the actual DOM nodes rendered in the browser.
+
+    The actual rendering of React elements into HTML elements is handled by ReactDOM, which compares the virtual DOM to the real DOM and updates only what’s necessary.
+
+2️⃣2️⃣ JSX:
+
+    When we used React.createElement() for displaying content on the webpage but its syntax is very bad. It’s not developer friendly, and very hard to read. To solve this problem Facebook developers built JSX.
+
+    ⭐ JSX is HTML-like or XML-like syntax. JSX stands for JavaScript XML. It's a syntax extension for JavaScript. to create react elements
+
+    💡A JavaScript extension is like adding new words or grammar to that language that JavaScript doesn’t understand by itself. You can write using that new style, but you need a translator (BABEL) to turn it back into normal JavaScript.
+
+    ❌ JSX is not a part of react. JavaScript engine cannot understand JSX as it only understands ECMAScript .
+    ❌JSX is not a valid Javascript syntax as it’s not pure HTML or pure JavaScript for a browser to understand. JS does not have built-in JSX. The JS engine does not understand JSX because the JS engine understands ECMAScript or ES6+ code
+
+    Q ) If the browser can’t understand JSX how is it still working?
+
+        📍 This is because of Parcel.
+
+        📍 Before the code gets to JS Engine it is sent to Parcel and Transpiled there. Then after transpilation, the browser gets the code that it can understand.
+
+        📍 Transpilation ⇒ Converting the code in such a format that the browsers can understand.
+                Transpilation = Transforming + Compiling
+                    It's the process of converting code from one version or form of a language to another.
+                    In the JavaScript Taking code written in new or extended JavaScript (like JSX or TypeScript) and converting it into plain JavaScript that all browsers understand.
+                        Real-world transpilers:
+                            Babel — for JSX and modern JS (like ES6+) ➡ ES5
+
+                            TypeScript compiler (tsc) — for TypeScript ➡ plain JavaScript
+
+                            SWC / esbuild / Vite — newer, faster transpilers
+
+        📍 Parcel is like a manager who gives the responsibility of transpilation to a package called Babel.
+
+        📍 Babel is a package that is a compiler/transpiler of JavaScript that is already present inside ‘node-modules’ which is depended by parcel, so upon installing parcel bable is installed as its dependency(transitive dependency). It takes JSX and converts it into the code that browsers understand, as soon as we write it and save the file. It is not created by Facebook.
+        
+        JSX (transpiled by Babel) ⇒ React.createElement ⇒ ReactElement ⇒ JS Object ⇒ HTML Element(render)
+
+    Single Line and Multi Line JSX Code
+    
+        Single line code:
+            const jsxHeading = <h1>Namaste React</h1>
+            
+        Multi-line code:
+            If writing JSX in multiple lines then using ‘()’ parenthesis is mandatory. To tell Babel from where JSX is starting and ending.
+                    const jsxHeading = (
+                    <div>
+                    <h1>Namaste React</h1>
+                    </div>
+                    )
+
+
+
+
+
+
+
