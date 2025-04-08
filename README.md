@@ -343,6 +343,42 @@
                     <h1>Namaste React</h1>
                     </div>
                     )
+    Advantages of JSX: (FROM Namaste React):
+
+        1) Sanitizes the data
+            If someone gets access to your JS code and sends some malicious data which will then get displayed on the screen, that attack is called cross-site scripting. It can read cookies, local storage, session storage, get cookies, get info about your device, and read data. JSx takes care of your data.
+            If some API passes some malicious data JSX will escape it. It prevents cross-site scripting and sanitizes the data before rendering
+        2) Makes code readable JSX makes it easier to write code as we are no longer creating elements using React.createElement()
+        3) Makes code simple and elegant
+        4) Show more useful errors and warnings
+        5) JSX prevents code injections (attacks)
+
+2️⃣3️⃣ React Components
+
+    A component in React is a function (or class) that returns JSX — which is basically HTML inside JavaScript.
+
+    There are 2 types of components:
+        1.Class-based Components 
+        2.Functional Components 
+
+   React Functional Components:
+        It is just a JavaScript Function that returns some JSX or a react element.
+        Always name React Functional Component with Capital Letters
+
+    To render a functional component we call them ‘<Heading1 />’.
+        This is the syntax that Babel understands.
+        You can also call them using these ways,
+        ‘<Title></Title>’
+        or
+        ‘{Title()}’
+
+    COMPONENT COMPOSITION:
+        putting (calling) a component inside another component.
+    
+    Inside a React Component when ‘{}’ parenthesis is present we can write any JavaScript expression inside it.
+
+
+    
 
 
 
