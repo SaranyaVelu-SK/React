@@ -1,4 +1,4 @@
-1️⃣ document Object (Created by JavaScript Engine):
+# 1️⃣ document Object (Created by JavaScript Engine):
 
     The JavaScript engine creates the document object when the webpage loads.
 
@@ -114,13 +114,13 @@
     React can even work in small places like within header, or in footer, or within nav, or within menu etc.,  -- work even on small portion of project unlike framework
     A key difference between the two is Inversion of control. When using a library, the control remains with the developer who tells the application when to call library functions. When using a framework, the control is reversed, which means that the framework tells the developer where code needs to be provided and calls it as it requires.
 
-1️⃣0️⃣ NPM:
+# 1️⃣0️⃣ NPM:
 
     npm is a package manager for the JavaScript programming language maintained by npm, Inc., a subsidiary of GitHub. npm is the default package manager for the JavaScript runtime environment Node.js and is included as a recommended feature in the Node.js installer.[4]
 
     It consists of a command line client, also called npm, and an online database of public and paid-for private packages, called the npm registry. The registry is accessed via the client, and the available packages can be browsed and searched via the npm website. The package manager and the registry are managed by npm, Inc.
 
-1️⃣1️⃣ npm init <initializer> vs npm init
+# 1️⃣1️⃣ npm init <initializer> vs npm init
 
     npm init <initializer> ---> uses create-<initializer> package to create a new project; npm init <initializer> runs as npx create-<initailzer> name_of_the_project
     This will automatically setup the basic structure(necessary project files) of project so that developers won't need to create it from scratch.
@@ -135,7 +135,7 @@
             ├── README.md
     npm init  ---> The command npm init is used to create a new package.json file for your project, which is essential for managing dependencies and scripts. Its like creating a project structure but with no packages to install( or like initializing create-  nothing)
 
-1️⃣2️⃣ Package.json
+# 1️⃣2️⃣ Package.json
 
     package.json is a configuration file in a Node.js project that stores important project information such as:
 
@@ -157,7 +157,7 @@
     Empty package.json	➡️ npm does nothing but creates node_modules/ and package-lock.json.
     package.json with dependencies	➡️ npm installs dependencies into node_modules/.
 
-1️⃣3️⃣ Tilde (~) vs. Caret (^) in package.json
+# 1️⃣3️⃣ Tilde (~) vs. Caret (^) in package.json
 
     These symbols tell npm how to handle updates to those packages.
 
@@ -189,7 +189,7 @@
         To prevent updates entirely, use an exact version:
         "express": "4.18.2" ➡️ This means only 4.18.2 will be installed—no updates at all.
 
-1️⃣4️⃣ Package-lock.json
+# 1️⃣4️⃣ Package-lock.json
 
     package-lock.json is an automatically generated file that locks the exact versions of installed dependencies. It ensures that everyone working on a project gets the same versions of packages.
 
@@ -204,7 +204,7 @@
     package.json	➡️  Defines dependencies with version ranges (^4.18.2, ~4.18.2).
     package-lock.json	➡️  Locks exact versions (4.18.2) to ensure consistency.
 
-1️⃣5️⃣ What Are Transitive Dependencies?
+# 1️⃣5️⃣ What Are Transitive Dependencies?
 
     Transitive dependencies are dependencies of the dependencies in package.json — packages that are automatically installed because they are required by other packages.
 
@@ -218,13 +218,13 @@
 
         react also depends on react-dom, which has its own transitive dependencies
 
-1️⃣6️⃣ Bundlers:
+# 1️⃣6️⃣ Bundlers:
 
     A bundler is a tool that bundles our app, packages our app so that it can be shipped to production.
     webpack, parcel, veet etc.,
     https://dev.to/sayanide/the-what-why-and-how-of-javascript-bundlers-4po9#:~:text=Bundlers%20are%20not%20transpilers,-Firstly%2C%20let's%20clarify&text=A%20JavaScript%20bundler%20is%20a,and%20improve%20page%20load%20performance.
 
-1️⃣7️⃣ PARCEL - The Beast
+# 1️⃣7️⃣ PARCEL - The Beast
 
     Characteristics / features / Uses of parcel
     1. zero config ➡️ No need of any configuration setups to execute parcel - just npx parcel index.html will build the app
@@ -244,7 +244,7 @@
 
     npx parcel index.html(for dev build) , npx parcel build index.html(for prod build)
 
-1️⃣8️⃣ Dist folder
+# 1️⃣8️⃣ Dist folder
      once the build is done - whatever we are seeing in browser comes from the dist folder - not from the files(like index.html or app.js) - everytime build is done - dist folder is regenerated. (since so, exclude it from adding to github - put it in .gitignore file)
      It keeps the files minified for us. When bundler builds the app, the build goes into a folder called dist. The `/dist` folder contains the minimized and optimised version the source code.
 
@@ -254,7 +254,7 @@
      "browserlist":[] in package.json ➡️ to configure the browser that our app could support
      Browserslist is a tool that specifies which browsers should be supported/compatible in your frontend app. It makes our code compatible for a lot of browsers. 
 
-1️⃣9️⃣ "Script" Section in Package.json
+# 1️⃣9️⃣ "Script" Section in Package.json
 
     The scripts section is a key in package.json where you define shortcut commands to run tasks like starting a server, building a project, testing, or deploying.
 
@@ -264,7 +264,7 @@
 
     What is another way of starting the build of the project? -----> By creating scripts instead of using “npx parcel index.html”. We can create different scripts for starting our project in Development and Production.
 
-2️⃣0️⃣ React Element:
+# 2️⃣0️⃣ React Element:
 
     const heading = React.createElement("h1",{},"Welcome!)  -----> refer 7th point above
 
@@ -289,7 +289,7 @@
     React elements are immutable. Once created, they can’t be changed. This immutability helps React do fast comparisons during rendering because it knows any change requires a new object. This makes UIs more predictable and improves performance with techniques like memoization and pure rendering.
     
 
-2️⃣1️⃣ HTML Elements vs React Elements
+# 2️⃣1️⃣ HTML Elements vs React Elements
 
     React elements are not actual DOM nodes, but plain JavaScript objects that describe what should appear on the screen. They're created via JSX or React.createElement() and are used by React’s virtual DOM for efficient updates.
 
@@ -297,7 +297,7 @@
 
     The actual rendering of React elements into HTML elements is handled by ReactDOM, which compares the virtual DOM to the real DOM and updates only what’s necessary.
 
-2️⃣2️⃣ JSX:
+# 2️⃣2️⃣ JSX:
 
     When we used React.createElement() for displaying content on the webpage but its syntax is very bad. It’s not developer friendly, and very hard to read. To solve this problem Facebook developers built JSX.
 
@@ -353,7 +353,7 @@
         4) Show more useful errors and warnings
         5) JSX prevents code injections (attacks)
 
-2️⃣3️⃣ React Components
+# 2️⃣3️⃣ React Components
 
     A component in React is a function (or class) that returns JSX — which is basically HTML inside JavaScript.
 
@@ -414,12 +414,12 @@
     
     Inside a React Component when ‘{}’ parenthesis is present we can write any JavaScript expression inside it.
 
-2️⃣4️⃣ styles in html and jsx
+# 2️⃣4️⃣ styles in html and jsx
 
     HTML: style="property: value;" ← CSS string ✅
     React (JSX): style={{ propertyName: 'value' }} ← JS object ✅
 
-2️⃣5️⃣ What happens behind the scenes when importing a json file
+# 2️⃣5️⃣ What happens behind the scenes when importing a json file
 
     For ex:
     consider a json file named user.json  ---> it is not exported like export default json name;
@@ -496,7 +496,7 @@
 
                     They intercept the import and do all the parsing for you during build time.
 
-2️⃣6️⃣ React Fragments
+# 2️⃣6️⃣ React Fragments
 
       React Fragments lets to group multiple elements without adding extra wrapper elements (like div) - so No extra elements added to the DOM.
 
@@ -527,10 +527,10 @@
                     );
                     }
 
-2️⃣7️⃣ Never use index as key
+# 2️⃣7️⃣ Never use index as key
     https://robinpokorny.com/blog/index-as-a-key-is-an-anti-pattern/
 
-2️⃣8️⃣ PROPS:
+# 2️⃣8️⃣ PROPS:
 
     props are the properties used to send data dynamically to components
 
@@ -538,17 +538,74 @@
 
     while receiving, Props will be wrapped and send in Javascript object
 
-2️⃣9️⃣ Config driven UI
+# 2️⃣9️⃣ Config driven UI
 
     It is a user Interface that is built and configured using a declaration configuration file or data structure, rather than being hardcoded. Config is the data coming from the api which keeps on changing according to different factors like user, location, etc. 
 
+# 3️⃣0️⃣ HOOKS:
+    React hooks are normal javascript functions which are prebuilt with super powers
 
+  ## 1️⃣useMemo:
+        i) "useMemo is a React Hook that memoizes the result of a computation and recalculates it only when its dependencies change.
+        ii) It’s mainly used to optimize performance for expensive calculations like filtering, sorting, or processing large datasets.
+        iii) useMemo doesn’t prevent re-renders but avoids unnecessary recalculations.
+        iv) I usually apply it after identifying real performance bottlenecks, not by default, because overusing it can lead to memory overhead."
 
+        Real world example
+            "Sure! Recently, I built a food delivery dashboard that fetched a list of restaurants from an API.
+                To show only top-rated restaurants, I used useMemo to filter the list.
+                Without useMemo, the filtering happened on every small input change like typing in the search bar.
+                With useMemo, the filtering only recomputed when the restaurant list or the filter option changed, which significantly improved the performance and reduced unnecessary computations."
+
+ ## 2️⃣useState:        
+        i) useState is react hook which lets to create and manage local state variables
+        ii) useState returns a state variable and a setter function to update the state
+        iii) whenever a state variable changes/updates, the component will be re-rendered
+
+# 3️⃣1️⃣ Imports and Exports
+
+    - Exports:
+        - Default export:
+            To export only one value (function, component, object, etc.) from a file.
+            can import it with any name we want
+            When to use: When a file has one main thing to export.
+        -Named export:
+            To export multiple values from a file, each with their name.
+            Ex:
+                export const Loader = () => { ... };
+                export const Spinner = () => { ... };
+            Must use ** curly braces {} and the exact same name ** when importing
+            Ex:
+                import { Loader, Spinner } from './utils';
+            When to use: When you have multiple utilities/functions/components in a file.
     
+    -Imports:
+        - * as import (namespace import)
+            To import everything from a file and give it a namespace name.
+            Ex:
+                import * as Utils from './utils';
+                <Utils.Loader />
+                <Utils.Spinner />
+            When to use: If you want to group all exports under one object (makes code organized).
 
+        - default import:
+            Importing the default export of a file.
+            No curly braces {} needed.
+            You can rename it while importing.
+        - named import:
+            To import specific named exports from a file.
+            Curly braces {} are mandatory.
+            The name must exactly match the exported name.
 
+    - Default + named export and import:
+        Ex:
+            export const Pen = () => { ... };
+            export const Eraser = () => { ... };
+            const Sharpener = () => { ... };
+            export default Sharpener;
 
-
-
+            import Sharpener, { Pen, Eraser } from './tools';     //first default import, then named imports inside curly braces
+            
+        No conflicts between default and named exports. Both can coexist in the same file.
 
 
