@@ -545,6 +545,14 @@
 # 3️⃣0️⃣ HOOKS:
     React hooks are normal javascript functions which are prebuilt with super powers
 
+## 🔹 Hooks Are Exclusive to Functional Components
+
+- **Hooks are exclusive to functional components**. They were introduced to give functional components the ability to manage state, handle lifecycle methods, and perform other operations that were previously only available in class components.
+
+## 🔹 What Can Class Components Do?
+
+- Class components **cannot** use hooks directly. However, class components can still use state, lifecycle methods, and other features without hooks.
+
   ## 1️⃣useMemo:
         i) "useMemo is a React Hook that memoizes the result of a computation and recalculates it only when its dependencies change.
         ii) It’s mainly used to optimize performance for expensive calculations like filtering, sorting, or processing large datasets.
@@ -571,7 +579,32 @@
                 [someVar] → runs when someVar changes
                 No array → runs after every render
 ## 4️⃣useNavigate:
-## 5️⃣useRouteError:
+`useParams` is a React Router hook that lets you access dynamic segments of the URL.  
+For example, if your route is `/user/:id`, calling `const { id } = useParams()` inside the component will give you the value of `id` from the URL.
+
+```jsx
+<Route path="/user/:id" element={<UserProfile />} />
+function UserProfile() {
+  const { id } = useParams();
+  return <div>User ID: {id}</div>;
+}
+```
+
+## 5️⃣ useParams:
+`useNavigate` is a hook that allows you to change routes programmatically. It's especially useful after actions like form submissions, login success, or conditional redirects.
+```
+function LoginSuccess() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate('/dashboard');
+  }, []);
+  
+  return <p>Redirecting...</p>;
+}
+```
+
+## 6️⃣useRouteError:
 * useRouteError is a React Router hook (v6.4+) used inside an error element to access the error that was thrown during data loading, action submission, or rendering in a route.
 * You use useRouteError in a route’s errorElement to get information about what went wrong. This is useful for custom error handling and displaying helpful messages to users.
 * useRouteError is a React Router hook that gives you access to errors caught by the router so you can display them in a custom error UI.
@@ -904,10 +937,10 @@ If You Didn’t Use the History API?
 # Children routes:
 
 ## Outlet:
-*<Outlet /> is a **React router component** which is like a  placeholder used in parent route components (parent route's layout) to render whatever child route matches the current path.
+* <Outlet /> is a **React router component** which is like a  placeholder used in parent route components (parent route's layout) to render whatever child route matches the current path.
 
 ## Link:
-*<Link /> is a __component__ from react-router-dom that lets you navigate between routes in a React app **without reloading the page**.
+* <Link /> is a __component__ from react-router-dom that lets you navigate between routes in a React app **without reloading the page**.
 * uses:
    Unlike a normal HTML <a> tag, which reloads the whole page, Link:
 -        Uses client-side routing (via the History API)
@@ -917,7 +950,7 @@ If You Didn’t Use the History API?
 # Single Page Applications:
 
     A Single Page Application (SPA) is a web app that:
-
+-SPA stands for  Single Page Application . It's a type of web application or website that interacts with the user by dynamically rewriting the current web page rather than loading entire new pages from the server. In other words, a single HTML page is loaded initially, and then the content is updated  dynamically as the user interacts with the application, typically through JavaScript
 -    Loads a single HTML page initially
 -    Dynamically updates content on the page using JavaScript
 -    Avoids full page reloads when navigating between "pages"
@@ -1014,3 +1047,87 @@ Server-side rendering means that the server is responsible for rendering the con
 Traditional websites or frameworks like Next.js (which can use both CSR and SSR) support SSR.
 
 ---
+
+# Dynamic routing:
+"Dynamic routing in React allows us to create routes that change based on the URL parameters. For example, we can define a route like /user/:id, where :id is a placeholder for dynamic values such as user IDs. This is commonly used for pages like user profiles or product details. We use React Router to define these routes and the useParams() hook to extract the dynamic part from the URL inside the component."
+
+---
+
+# Class-Based Components in React (CBC)
+
+## Introduction
+Class-based components (CBC) are the traditional way to define components in React. They provide a way to handle state, lifecycle methods, and other features in React. Class components extend from `React.Component` and must have a `render` method to return JSX. The constructor of a CBC is used to initialize props and state.
+
+## Constructor in Class-Based Components
+The constructor is invoked when the component is created. It receives `props` as an argument, which can be used to initialize the component's state or perform other setup tasks. The constructor should call `super(props)` to ensure that `React.Component` is properly initialized and `props` are accessible in the component.
+
+## `super(props)`
+Calling `super(props)` invokes the constructor of `React.Component` and passes the `props` to it. This is essential for initializing the CBC with the correct `props` and ensuring that React can manage the component's lifecycle correctly.
+
+## `this.props`
+`this.props` refers to the properties passed into the component. These props are passed from the parent component when the component is rendered. Inside the CBC, `this.props` can be accessed to retrieve values like `this.props.name`.
+
+## `this.state`
+`this.state` is used to store and manage the internal state of a component. It is initialized in the constructor. State can be updated using `this.setState()` which triggers a re-render.
+
+## `render()` Method
+The `render()` method is a required method in a CBC. It returns JSX that represents what should be rendered to the UI. React automatically calls the `render()` method whenever the component's state or props change. No need to explicitly call render() in the constructor.
+
+### How `render()` is Called
+React **automatically** calls the `render()` method when:
+  1. The component is initially mounted.
+  2. The component's state or props change (through `this.setState()` or new props from the parent).
+
+The `render()` method is **not** called manually inside the constructor; React manages when it is called.
+
+## why can't we initialize this.props in the cbc rather than passing props to React.Component(calling constructor of it) and then using it in cbc?
+-super(props) is necessary because JavaScript requires that you call the constructor of the parent class before using this. Without it, this.props won't be properly set up.
+
+-React.Component needs to handle the initialization of props in its constructor, and super(props) is the mechanism to pass the props to React.Component.
+
+-You can’t directly assign this.props in your CBC constructor because React manages how this.props is set and made available to your component instance.
+
+-Without super(props), this refers to the CBC instance, but it doesn't have the necessary setup from the parent React.Component, and this.props would remain undefined.
+## State Initialization in Constructor
+In the constructor, you initialize the state using `this.state`. The state is an object that holds data that can change over time. It can be updated using the `this.setState()` method, which triggers a re-render.
+
+## `setState()` and `forceUpdate()`
+The `this.setState()` method is used to update the state of a component. When state changes, React re-renders the component. `forceUpdate()` can be used to force a re-render of the component, but it is generally not recommended unless necessary.
+
+## Methods in `React.Component`
+Here are some important methods provided by `React.Component`:
+
+1. **`this.setState()`**: Updates the component’s state and triggers a re-render.
+2. **`this.forceUpdate()`**: Forces a re-render of the component.
+3. **`this.render()`**: Returns JSX and is called by React to render the component.
+
+## Lifecycle Methods
+Lifecycle methods allow you to hook into specific points in the component's lifecycle, such as when the component is mounted, updated, or unmounted. These methods include:
+
+1. **`componentDidMount()`**: Called after the component is first rendered and added to the DOM.
+2. **`componentDidUpdate(prevProps, prevState)`**: Called after the component is updated.
+3. **`componentWillUnmount()`**: Called just before the component is removed from the DOM.
+4. **`shouldComponentUpdate(nextProps, nextState)`**: Used to prevent unnecessary re-renders.
+5. **`getDerivedStateFromProps(nextProps, nextState)`**: A static method to sync state with props.
+6. **`getSnapshotBeforeUpdate(prevProps, prevState)`**: Called right before the DOM is updated.
+
+## How does constructor of React.Component look like? 
+```
+class Component {
+  constructor(props) {
+    // Step 1: Initialize the component's internal state
+    this.state = null; // This could be a default value (e.g., `null` or `{}`)
+
+    // Step 2: Set up `this.props` — the props passed to the component
+    this.props = props;
+
+    // Step 3: Allow binding methods (this is done by the child class)
+    // (Child components can override this constructor and add their own state initialization or method binding.)
+  }
+
+  // Other methods...
+}
+```
+---
+
+
