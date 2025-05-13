@@ -578,6 +578,12 @@
                 [] → runs once (like componentDidMount)
                 [someVar] → runs when someVar changes
                 No array → runs after every render
+*Why can't the callback function of useEffect be async?*
+-   An async function always returns a Promise
+-   But React expects the return value of useEffect to be:
+    undefined → means “no cleanup” or a cleanup function → runs on unmount or before re-run
+-   If a Promise is returned, React can’t treat it as a cleanup function
+
 ## 4️⃣useNavigate:
 `useParams` is a React Router hook that lets you access dynamic segments of the URL.  
 For example, if your route is `/user/:id`, calling `const { id } = useParams()` inside the component will give you the value of `id` from the URL.
@@ -947,7 +953,7 @@ If You Didn’t Use the History API?
 -        Keeps the app fast and smooth
 -        Maintains React component state between page changes
 
-# Single Page Applications:
+# 3️⃣3️⃣ Single Page Applications:
 
     A Single Page Application (SPA) is a web app that:
 -SPA stands for  Single Page Application . It's a type of web application or website that interacts with the user by dynamically rewriting the current web page rather than loading entire new pages from the server. In other words, a single HTML page is loaded initially, and then the content is updated  dynamically as the user interacts with the application, typically through JavaScript
@@ -1053,7 +1059,7 @@ Traditional websites or frameworks like Next.js (which can use both CSR and SSR)
 
 ---
 
-# Class-Based Components in React (CBC)
+# 3️⃣4️⃣Class-Based Components in React (CBC)
 
 ## Introduction
 Class-based components (CBC) are the traditional way to define components in React. They provide a way to handle state, lifecycle methods, and other features in React. Class components extend from `React.Component` and must have a `render` method to return JSX. The constructor of a CBC is used to initialize props and state.
@@ -1063,6 +1069,8 @@ The constructor is invoked when the component is created. It receives `props` as
 
 ## `super(props)`
 Calling `super(props)` invokes the constructor of `React.Component` and passes the `props` to it. This is essential for initializing the CBC with the correct `props` and ensuring that React can manage the component's lifecycle correctly.
+*When a child class extends a parent class, the child class can have its constructor. However, if the child class has a constructor, it must call super(props) as the first statement in its constructor. This is because super(props) is used to invoke the constructor of the parent class, ensuring that the parent class's initialization is performed before the child class's constructor code is executed. It is essential to maintain the inheritance chain correctly.*
+
 
 ## `this.props`
 `this.props` refers to the properties passed into the component. These props are passed from the parent component when the component is rendered. Inside the CBC, `this.props` can be accessed to retrieve values like `this.props.name`.
@@ -1130,4 +1138,97 @@ class Component {
 ```
 ---
 
+# Consider this scenario:
+- The parent component has constructor, render, and componentDidMount functions. It also has three child components, and each child component includes its own constructor, render, and componentDidMount functions.
 
+-Upon logging messages to the console from all these functions, the output was as follows:
+```
+parent constructor  
+parent render  
+child constructor first  
+child render first  
+child constructor second  
+child render second  
+child constructor third  
+child render third  
+child mount first  
+child mount second  
+child mount third  
+parent mount
+```
+
+Usually, the order of function execution is: constructor, then render, followed by componentDidMount. So, we would expect the lifecycle to follow this sequence:
+
+#### Expected(as per order of execution):
+First child’s constructor, render, and componentDidMount
+
+Second child’s constructor, render, and componentDidMount
+
+Third child’s constructor, render, and componentDidMount
+
+#### observed result:
+However, the observed output differed from this expected sequence. This is because ,actually React updates DOM and refs before commit phase(i.e componentDidMount) and DOM manipulation is one of the most expensive operations. React optimizes this internally by batching all the render functions of the child components together before proceeding to the componentDidMount phase.
+
+---
+
+# Order of Execution of life cycle methods in class based component:
+1. Constructor - It is executed when a component instance is created from the class.  It's where we typically initialize the component's state and bind event handlers.
+2. render - responsible for rendering the component's UI (rendering the JSX).
+3. componentDidMount - This method is called immediately after the component is inserted into the DOM. It's often used for making AJAX requests, setting up subscriptions, or other one-time initializations.
+4. componentDidUpdate - This method is called after the component has been updated (re-rendered) due to changes in state or props. It's often used for side effects, like updating the DOM in response to state or prop changes.
+5. ComponentWillUnmount - This method is called just before the component is removed from the DOM. It's used to clean up resources or perform any necessary cleanup.
+
+---
+
+## componentWillUnmount:
+- componentWillUnmount is a lifecycle method in React class-based components (cbc) that runs just before a component is removed (unmounted) from the DOM. It’s mainly used for cleanup tasks like clearing timers, canceling network requests, or removing event listeners.
+*Never call setState inside componentWillUnmount — the component is on its way out, so there’s no point in updating its state.*
+
+## use cases for useEffect with a return function—one using an empty dependency array and one using a dependency array
+
+- Empty dependency array ([]) → Runs once on mount; cleanup runs on unmount.
+- Dependency array ([value]) → Runs on mount and whenever value changes; cleanup runs before re-run and on unmount.
+
+ 1. Empty Dependency Array ([])
+ Use Case: Set up and clean up a WebSocket connection
+```
+useEffect(() => {
+  const socket = new WebSocket("wss://example.com/socket");
+
+  socket.onmessage = (event) => {
+    console.log("Message from server:", event.data);
+  };
+
+  console.log("WebSocket connected");
+
+  return () => {
+    socket.close();
+    console.log("WebSocket disconnected");
+  };
+}, []);
+```
+
+Why this works:
+- The effect runs once when the component mounts (like componentDidMount).
+- The cleanup runs once when the component unmounts (like componentWillUnmount).
+
+ 2. Dependency Array ([count])
+🔧 Use Case: Set up a timer that uses count value
+```
+useEffect(() => {
+  const timer = setInterval(() => {
+    console.log("Count value:", count);
+  }, 1000);
+
+  return () => {
+    clearInterval(timer); // clean up old timer
+    console.log("Timer cleared for count:", count);
+  };
+}, [count]);
+```
+
+ Why this works:
+- Every time count changes, the old interval is cleared and a new one starts.
+- Prevents multiple overlapping intervals or using stale state.
+
+---
