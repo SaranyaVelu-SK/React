@@ -1232,3 +1232,13 @@ useEffect(() => {
 - Prevents multiple overlapping intervals or using stale state.
 
 ---
+
+#### Why use the function form setPageNumber(prev => prev - 1)?
+When updating state in React, especially with hooks like useState, using the functional update form ensures you are working with the latest state value.
+
+**Explanation**:
+*setPageNumber(pageNumber - 1) uses the current value of pageNumber from the closure at render time. If multiple state updates happen quickly, this value might be outdated, leading to bugs (like skipping or repeating pages).*
+*setPageNumber(prev => prev - 1) passes a function to React. React then calls it with the most recent state value (prev), so the update is always based on the latest state, no matter how many updates are queued.*
+
+-Use functional updates when your new state depends on the previous state.
+-It avoids bugs caused by stale closures and asynchronous state updates in React.
