@@ -2,6 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom/client";
 import Header from "./header";
 import Pagination from "./Problems/Pagination";
+import AutocompleteSearchBar from "./Problems/AutocompleteSearchBar";
 
 
 const header  = React.createElement("div",{className:"title"},[
@@ -10,4 +11,4 @@ const header  = React.createElement("div",{className:"title"},[
     React.createElement("h3",{key:"h3"},"Hello from heading 3"),
 ])
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<Pagination />);
+root.render(<AutocompleteSearchBar />);

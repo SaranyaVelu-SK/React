@@ -615,6 +615,18 @@ function LoginSuccess() {
 * You use useRouteError in a route’s errorElement to get information about what went wrong. This is useful for custom error handling and displaying helpful messages to users.
 * useRouteError is a React Router hook that gives you access to errors caught by the router so you can display them in a custom error UI.
 
+## 7️⃣CUSTOM HOOKS:
+* Custom hooks are utility functions that lets us to encapsulate logic and reuse it across different components.
+* Custom hooks are just functions that:
+-    Start with the word use (e.g., useFetch, useForm, useAuth)
+-    Can use other hooks inside them (useState, useEffect, etc.)
+-    Return some value (data, state, or functions)
+**uses of custom hooks**
+- Reusability – Share logic across components.
+- Cleaner code – Keep components focused on rendering UI, not logic.
+- Separation of concerns – Logic and UI are decoupled.
+- Testability – You can test hooks separately.
+
 
 # 3️⃣1️⃣ Imports and Exports
 
@@ -1233,7 +1245,7 @@ useEffect(() => {
 
 ---
 
-#### Why use the function form setPageNumber(prev => prev - 1)?
+# Why use the function form setPageNumber(prev => prev - 1)?
 When updating state in React, especially with hooks like useState, using the functional update form ensures you are working with the latest state value.
 
 **Explanation**:
@@ -1242,3 +1254,90 @@ When updating state in React, especially with hooks like useState, using the fun
 
 -Use functional updates when your new state depends on the previous state.
 -It avoids bugs caused by stale closures and asynchronous state updates in React.
+
+---
+
+# online status custom hook:
+```
+import { useEffect, useState } from "react";
+
+const useOnlineStatus = () =>{
+    const [onlineStatus,setOnlineStatus] = useState(true);
+ useEffect(()=>{
+    window.addEventListener("offline",()=>{
+        setOnlineStatus(false);
+    })
+    window.addEventListener("online",()=>{
+        setOnlineStatus(true);
+    })
+ },[]);
+
+ return onlineStatus;
+}
+export default useOnlineStatus;
+```
+
+---
+
+# 3️⃣5️⃣ LAZY LOADING:
+*lazy loading refers to deferring the loading of a component until it’s actually needed (e.g., when a user navigates to a certain route or interacts with a feature).This is especially useful for large applications where loading everything at once would hurt performance.*
+
+lets look at a situation like this:
+- we have a huge file(huge is relative to the no.of. components it has) is bundled by parcel, all code compressed into 1 JS file that will be very huge - Home page gets longer time to load.
+- It is necessary to optimize the code and to do so we are creating small bundles (logical seperation of bundles)
+- This process is called "lazy loading" | "dynamic import" | "code chunking" | "code splitting" | "on-demand loading" | "dynamic bundling" | "Deferred loading"
+
+**Without lazy loading**, all your components and assets are bundled together, meaning the user has to download a big JavaScript file before anything renders. This leads to:
+1. Longer initial load times
+2. Poor performance, especially on slow networks
+3. Bad user experience
+
+## **Benefits of Lazy Loading**:
+1. Faster initial load – only the necessary components are loaded first
+2. Improved performance – smaller JS bundles, optimized memory usage
+3. Better user experience – users get to the content they want faster
+4. Ideal for mobile – reduces data usage
+
+```
+import { lazy, Suspense } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+const Home = lazy(() => import('./pages/Home'));            // home is a seperate bundle
+const About = lazy(() => import('./pages/About'));          // About is a seperate bundle
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
+  );
+}
+```
+
+1. React.lazy()
+This function is used to lazy-load a component. lazy function has a callback function. That cb func has import function(not our usual import that imports component) that will take component's path as argument.
+
+2. Suspense
+This is used to show a fallback UI (like a spinner or message) while the lazy-loaded component is being fetched. Also used to overcome suspended error.
+
+## Notes to be remembered on Lazy Loading
+- React.lazy only works with default exports.
+- Always wrap lazy-loaded components inside <Suspense>.
+- You can customize the fallback – spinner, skeleton screen, etc.
+- You can combine lazy loading with code-splitting tools like Webpack or Vite.
+**Bonus: Lazy Load Images**
+For images, lazy loading can be done like this:
+```
+<img src="image.jpg" loading="lazy" alt="example" />
+```
+Or use a library like react-lazyload or react-intersection-observer.
+
+Another Example relevant to lazy loading:
+```
+
+--- 
