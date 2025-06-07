@@ -1341,3 +1341,103 @@ Another Example relevant to lazy loading:
 ```
 
 --- 
+
+# Higher Order Components (HOCs)
+
+- A **Higher-Order Component (HOC)** is a function that takes a component and returns a new component with additional props, behavior, or logic.
+- It’s a design pattern based on the concept of higher-order functions.
+
+---
+
+## So why not just "add features" directly?
+
+You *can*, but that quickly leads to:
+
+1. Code duplication  
+2. Tightly coupled logic  
+3. Harder testing  
+4. More bugs when things change  
+
+---
+
+## Use Cases of Higher-Order Components
+
+### 1. Code Reuse / Logic Sharing
+
+When multiple components share similar behavior (e.g., fetching data, logging, authentication), HOCs help avoid repeating code.
+
+```jsx
+function withLoading(WrappedComponent) {
+  return function WithLoadingComponent({ isLoading, ...props }) {
+    if (isLoading) return <p>Loading...</p>;
+    return <WrappedComponent {...props} />;
+  };
+}
+
+const UserListWithLoading = withLoading(UserList);
+```
+
+---
+
+### 2. Conditional Rendering / Authorization
+
+Show or hide components based on permissions or roles.
+
+```jsx
+function withAuthorization(WrappedComponent) {
+  return function AuthorizedComponent(props) {
+    if (!props.isAuthorized) {
+      return <p>You do not have access to this content.</p>;
+    }
+    return <WrappedComponent {...props} />;
+  };
+}
+
+const AdminPanelWithAuth = withAuthorization(AdminPanel);
+```
+
+---
+
+### 3. Adding Styling or Theming
+
+Wrap components to add common styles or themes without modifying each component.
+
+```jsx
+function withBorder(WrappedComponent) {
+  return function ComponentWithBorder(props) {
+    return (
+      <div style={{ border: "2px solid blue", padding: "10px" }}>
+        <WrappedComponent {...props} />
+      </div>
+    );
+  };
+}
+
+const ButtonWithBorder = withBorder(Button);
+```
+
+---
+
+### 4. Enhancing Props / Injecting Data
+
+Provide additional data or functionality via props.
+
+```jsx
+function withUser(WrappedComponent) {
+  return function ComponentWithUser(props) {
+    const user = { name: "Alice", loggedIn: true }; // Imagine fetched from context or API
+    return <WrappedComponent {...props} user={user} />;
+  };
+}
+
+const ProfileWithUser = withUser(Profile);
+```
+
+---
+
+### Summary
+
+HOCs help keep your React components **clean, reusable, and easy to maintain** by abstracting common functionality outside of individual components.
+
+---
+
