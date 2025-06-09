@@ -1441,3 +1441,493 @@ HOCs help keep your React components **clean, reusable, and easy to maintain** b
 
 ---
 
+# 3️⃣6️⃣ PROPS DRILLING AND CONTEXT:
+
+-   Prop drilling in React is the process of passing data from a parent component down to deeply nested child components through intermediate components that don’t necessarily need that data themselves.
+
+---
+
+## disadvantages of prop drilling:
+
+| Disadvantage                   | Effect on Code              |
+| ------------------------------ | --------------------------- |
+| Unnecessary re-renders         | Performance loss            |
+| Reduced readability            | Hard to follow and debug    |
+| Tightly coupled components     | Low reusability             |
+| More boilerplate               | Verbose and repetitive code |
+| Hard to refactor               | Fragile and error-prone     |
+| Difficult to manage deep trees | Inflexible UI architecture  |
+| No easy selective updates      | Inefficient updates         |
+
+---
+
+### Alternatives to Avoid Prop Drilling:
+-Context API – Share state globally without passing through every component.
+-Redux/Zustand/Jotai/Recoil – State management libraries.
+-React Query / SWR – For server state and caching.
+- Custom Hooks – Abstract and centralize logic.
+
+---
+
+# Context API:
+
+* The Context API in React is a built-in feature that allows you to share data globally across components without prop drilling (like a global store /central store).can use anywhere
+
+---
+
+#### when to use context:
+* when need to share state or data (e.g. **user info, theme, language, auth status**) across many nested components.
+* when want to avoid prop drilling.
+* use when data is needed in all parts(most of the parts)
+
+---
+
+####
+| Part                 | What It Does                                  |
+| -------------------- | --------------------------------------------- |
+| `createContext()`    | Creates a new context object                  |
+| `<Context.Provider>` | Makes the data available to child components  |
+| `useContext()`       | Allows any child component to access the data |
+
+---
+
+## what createContext() is doing internally?
+* createContext function will create a context object which has two main components(functions):
+      - User.Provider → a react component used to provide the context value to the component tree
+      - User.Consumer → a react component used to consume the context value (useContext hook is used nowadays)
+
+---
+
+## What happens when we use createContext() with and without a default value?
+
+*With default value*
+const MyContext = createContext("default");
+
+*Without default value*
+const MyContext = createContext();
+
+**Behind the scenes:**
+The argument passed to createContext() becomes the default value used by consumers if there is no <Provider> higher in the component tree.
+If no default is provided, undefined is the fallback.
+
+| *Scenario*                   | *Code*                                | *`useContext()` returns if no `<Provider>`* |
+| ---------------------------  | -----------------------------------   | ----------------------------------------- |
+| With default value           | `createContext("Hello")`              | `"Hello"`                                 |
+| With default object          | `createContext({ theme: "light" })`   | `{ theme: "light" }`                      |
+| With `undefined` explicitly  | `createContext(undefined)`            | `undefined`                               |
+| With no argument             | `createContext()`                     | `undefined`                               |
+
+* If you always expect a Provider, consider not setting a default.
+* If you want to safely use context without enforcing a provider, give a safe default like "Guest" or { user: null }.
+
+**The default value passed to createContext() in React can be anything — literally any JavaScript value.**
+
+| Type                     | Example                                              |
+| ------------------------ | ---------------------------------------------------- |
+| **Primitive**            | `createContext("hello")`<br>`createContext(42)`      |
+| **Object**               | `createContext({ username: "sara", role: "admin" })` |
+| **Array**                | `createContext([1, 2, 3])`                           |
+| **Function**             | `createContext(() => "hi")`                          |
+| **Class**                | `createContext(new MyClass())`                       |
+| **`null` / `undefined`** | `createContext(null)`<br>`createContext()`           |
+| **Boolean**              | `createContext(false)`                               |
+| **React Element**        | `createContext(<MyComponent />)`                     |
+
+---
+
+* Use a shape that matches your actual context value, especially for objects/functions
+* Avoid using complex values unless needed
+* *For safety, even if a default function does nothing, pass a stub like () => {} to avoid runtime crashes*
+
+---
+
+### Why import/export is NOT a Good Replacement for React Context (with examples)
+1. 🚫 Not Reactive
+Problem: Changing an imported variable doesn't trigger React re-render.
+
+```
+// user.js
+export const user = { name: "Sara" };
+
+// ComponentA.jsx
+import { user } from "./user";
+user.name = "Saran"; // updated here
+
+// ComponentB.jsx
+import { user } from "./user";
+console.log(user.name); // "Saran" – but UI won't update!
+```
+✅ React Context version:
+
+```
+const UserContext = createContext();
+
+function App() {
+  const [user, setUser] = useState({ name: "Sara" });
+
+  return (
+    <UserContext.Provider value={user}>
+      <ComponentB />
+    </UserContext.Provider>
+  );
+}
+
+function ComponentB() {
+  const user = useContext(UserContext);
+  return <div>{user.name}</div>; // Will update automatically
+}
+```
+2. 🚫 Global Mutation is Risky
+Problem: Any component can change shared imports → bugs.
+
+```
+// settings.js
+export const settings = { theme: "light" };
+
+// ComponentA.jsx
+import { settings } from "./settings";
+settings.theme = "dark"; // Changed globally
+
+// ComponentB.jsx
+import { settings } from "./settings";
+console.log(settings.theme); // "dark" – unexpected change
+```
+✅ With Context, only components inside the provider will get the change.
+
+3. 🚫 No Scoped or Dynamic Values
+You cannot have different values in different parts of the UI with import/export.
+
+```
+// config.js
+export const config = { language: "en" };
+
+// Header.jsx
+console.log(config.language); // "en"
+
+// Footer.jsx
+config.language = "fr";
+console.log(config.language); // "fr" — changes everywhere
+```
+✅ React Context solves this:
+
+```
+<LanguageContext.Provider value={{ language: "en" }}>
+  <Header />
+</LanguageContext.Provider>
+
+<LanguageContext.Provider value={{ language: "fr" }}>
+  <Footer />
+</LanguageContext.Provider>
+```
+🔁 Now each part gets a different value.
+
+4. 🚫 No Server-Side Safety (SSR)
+Global values via import/export persist between users.
+
+In SSR, this causes cross-user data leakage.
+
+✅ Context lets you generate per-request trees for safe rendering.
+
+5. 🚫 Not Trackable in React DevTools
+React DevTools only sees what’s inside props/state/context.
+```
+// config.js
+export const theme = { dark: true };
+```
+You can’t inspect theme from DevTools.
+
+✅ Context values are visible in React DevTools, making debugging easier.
+
+6. 🚫 Breaks React's One-Way Flow
+React encourages data flowing top → down via:
+
+Props
+
+Context
+
+With import/export, updates don’t follow the render cycle. They mutate outside React's control.
+
+✅ Context integrates naturally with React's unidirectional model.
+
+---
+
+#### Importance of React Context
+
+- **Avoids Prop Drilling**  
+  Share data across many components without passing props through every intermediate level.
+
+- **Improves Code Maintainability**  
+  Centralizes shared state or configuration for easier updates and debugging.
+
+- **Enables Scoped and Dynamic Data Sharing**  
+  Different parts of the component tree can receive different context values.
+
+- **Supports Reactive Updates**  
+  Consuming components automatically re-render when context values change.
+
+- **Cleaner Component APIs**  
+  Components consume only the data they need, without unnecessary props.
+
+- **Common Use Cases**  
+  Theming, user authentication, localization, global app settings, etc.
+
+---
+
+### Using Multiple React Contexts in React
+Can we have multiple Contexts?
+Yes! React encourages creating multiple contexts to separate concerns and manage different pieces of app-wide data independently. For example:
+
+* A ThemeContext for UI theming (light/dark)
+* A UserContext for authenticated user info
+* A LanguageContext for localization/language settings
+And more...
+
+Each context manages a specific type of data, making your code modular, easier to maintain, and test.
+
+---
+
+##### Why multiple contexts instead of one big context?
+
+Separation of Concerns: Each context handles one responsibility.
+
+Performance: Updating one context triggers re-renders only for consumers of that context, avoiding unnecessary updates.
+
+Scalability: You can add or remove contexts as your app grows.
+
+Reusability: Contexts can be reused independently in different parts of your app.
+
+---
+
+##### How to wrap the root element with multiple contexts?
+
+1. Nesting Providers:
+
+You wrap your component tree inside multiple providers by nesting them. Each provider makes its context value available to the subtree inside it.
+
+Example:
+```
+import React from "react";
+import { ThemeProvider } from "./ThemeContext";
+import { UserProvider } from "./UserContext";
+import { LanguageProvider } from "./LanguageContext";
+
+function App() {
+  return (
+    <ThemeProvider value={{ theme: "light" }}>
+      <UserProvider value={{ name: "Sara", isLoggedIn: true }}>
+        <LanguageProvider value={{ language: "en" }}>
+          {/* Your app components here */}
+          <MainApp />
+        </LanguageProvider>
+      </UserProvider>
+    </ThemeProvider>
+  );
+}
+
+export default App;
+```
+
+In this example:
+
+ThemeProvider wraps everything and provides the theme.
+
+UserProvider wraps inside theme and provides user data.
+
+LanguageProvider wraps inside user and provides language settings.
+
+Every component inside MainApp can access one or more of these contexts independently using useContext.
+
+2. Using a Single AppProviders Wrapper Component:
+
+Nesting multiple providers inline can get verbose and clutter your root file. A common practice is to create a dedicated component that encapsulates all providers:
+```
+function AppProviders({ children }) {
+  return (
+    <ThemeProvider value={{ theme: "light" }}>
+      <UserProvider value={{ name: "Sara", isLoggedIn: true }}>
+        <LanguageProvider value={{ language: "en" }}>
+          {children}
+        </LanguageProvider>
+      </UserProvider>
+    </ThemeProvider>
+  );
+}
+
+// Then use it like this:
+function Root() {
+  return (
+    <AppProviders>
+      <App />
+    </AppProviders>
+  );
+}
+```
+This keeps the root or index file clean and the provider logic organized.
+
+---
+
+##### How consuming multiple contexts looks inside components?
+
+You can consume multiple contexts independently using the useContext hook.
+
+```
+import React, { useContext } from "react";
+import { ThemeContext } from "./ThemeContext";
+import { UserContext } from "./UserContext";
+import { LanguageContext } from "./LanguageContext";
+
+function Profile() {
+  const { theme } = useContext(ThemeContext);
+  const { name, isLoggedIn } = useContext(UserContext);
+  const { language } = useContext(LanguageContext);
+
+  return (
+    <div style={{ background: theme === "dark" ? "#333" : "#fff" }}>
+      <h1>{isLoggedIn ? `Hello, ${name}!` : "Welcome, Guest"}</h1>
+      <p>Language: {language}</p>
+    </div>
+  );
+}
+```
+
+Each useContext call is independent, so React optimizes re-renders for each context separately.
+
+**Important Notes:**
+
+Order matters only if context values depend on one another. Otherwise, the order is arbitrary.
+
+Avoid deeply nested providers in very large apps by grouping logically or creating separate context trees.
+
+Using multiple contexts can improve performance because updates to one context do not force consumers of other contexts to re-render.
+
+**Summary**
+
+You can and should use multiple React Contexts to handle different types of app-wide data.
+
+Wrap your root component by nesting multiple Providers or use a dedicated wrapper component to keep code clean.
+
+Consume each context independently using useContext.
+
+This approach leads to better separation of concerns, maintainability, and performance.
+
+---
+
+# React setState Deep Dive:
+
+#### What Happens When You Call setState()?
+
+1. React does not immediately update the state.
+
+2. It queues the update and schedules a re-render.
+
+3. State updates are asynchronous, not in the sense of promises, but they defer execution until the event loop or render cycle ends.
+
+#### State Queue Mechanics
+
+* React maintains an internal queue of state updates.
+
+* Each setState() call adds a function or value to this queue.
+
+* After the current event handler completes, React processes this queue and applies updates in order.
+
+#### What Happens with Regular Updates?
+```
+setCount(count + 1);
+setCount(count + 1);
+```
+
+*Both use the stale value of count.*
+*They both calculate count + 1 as 1, so React ends up setting count = 1 after both calls.*
+
+##### How to Fix: Use Function Updater:
+```
+setCount(prev => prev + 1);
+setCount(prev => prev + 1);
+```
+
+*This approach gives React an updater function, not a final value.*
+*React applies updates one by one:*
+*First: prev = 0 → 1*
+*Second: prev = 1 → 2*
+*Final count = 2*
+
+##### Key Reasons Why React Uses Asynchronous Updates:
+
+**Batching:**
+
+React groups multiple state updates to improve performance.
+
+Avoids re-rendering after every tiny change.
+
+**Consistency:**
+
+Ensures all state updates are processed predictably after the event loop.
+
+**Avoids Race Conditions:**
+
+Using updater functions avoids bugs from stale values during re-renders.
+
+##### How to Observe This?
+
+Use useEffect to track when the state actually updates:
+
+```
+useEffect(() => {
+  console.log("Count updated to:", count);
+}, [count]);
+```
+
+##### Best Practice for Dependent Updates:
+
+Always use the function updater when the next state depends on the previous one:
+
+```
+setState(prev => prev + 1);
+```
+
+---
+
+# Controlled vs Uncontrolled Components in React
+
+### Controlled Components
+
+- Controlled components are those where **React holds the source of truth** for the component’s state or data.
+- The **parent component manages the state** and passes the current state as **props** to the child components.
+- Child components **do not keep their own internal state** but rely fully on the props they receive.
+- When a child component needs to change its state (e.g., a user action), it **notifies the parent via callbacks**.
+- This approach makes state **centralized, predictable, and easier to synchronize** across multiple components.
+- Controlled components enable **clear and consistent data flow** and make debugging easier because you always know where your data lives.
+- This pattern is particularly useful when multiple components need to **share or coordinate state** to behave consistently.
+
+### Uncontrolled Components
+
+- Uncontrolled components **manage their own state internally**, without external control.
+- They maintain their own internal data, typically through React’s `useState` or similar hooks inside themselves.
+- The parent component is mostly **unaware of the child’s internal state**.
+- This makes the child component more **self-contained and independent**, but it limits the ability to coordinate or synchronize behavior between components.
+- Uncontrolled components are simpler to build when **state coordination is unnecessary**.
+- However, when state synchronization or shared behavior is needed, this approach can become **limiting and harder to manage**.
+
+### Core Idea: State Ownership and Sharing
+
+- The main difference is about **who owns the state**: the child (uncontrolled) or the parent (controlled).
+- When state is **lifted up to a common parent**, React components can easily share and synchronize their behavior.
+- This leads to a **unidirectional data flow** where parents pass data down via props, and children send updates upward via callbacks.
+
+### When to Use Which?
+
+#### Use Controlled Components When:
+- You need **consistent behavior** across multiple components.
+- You want to **centralize logic and validation**.
+- Your UI requires **state synchronization or coordinated user interactions**.
+
+#### Use Uncontrolled Components When:
+- You want **quick, isolated behavior** without complex coordination.
+- The component’s state is **simple and self-contained**.
+- Performance or simplicity outweigh the need for shared state control.
+
+### Summary
+
+Controlled components provide **predictability and control** by centralizing state, enabling multiple components to work together seamlessly. Uncontrolled components offer **simplicity and encapsulation**, suitable for independent pieces of UI where coordination is unnecessary.
+
+---
