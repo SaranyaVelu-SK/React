@@ -688,7 +688,7 @@ function LoginSuccess() {
 
 ### 1. Creates a Router Object
 
-`createBrowserRouter()` generates a central router object that:
+`createBrowserRouter()` generates a central router object that: (accepts array of route objects)
 
 * Stores route definitions
 * Manages matching rules for URLs
@@ -1469,7 +1469,7 @@ HOCs help keep your React components **clean, reusable, and easy to maintain** b
 
 ---
 
-# Context API:
+# 3️⃣7️⃣ Context API:
 
 * The Context API in React is a built-in feature that allows you to share data globally across components without prop drilling (like a global store /central store).can use anywhere
 
@@ -1812,9 +1812,9 @@ This approach leads to better separation of concerns, maintainability, and perfo
 
 ---
 
-# React setState Deep Dive:
+# 3️⃣8️⃣ React setState Deep Dive:
 
-#### What Happens When You Call setState()?
+### What Happens When You Call setState()?
 
 1. React does not immediately update the state.
 
@@ -1822,7 +1822,7 @@ This approach leads to better separation of concerns, maintainability, and perfo
 
 3. State updates are asynchronous, not in the sense of promises, but they defer execution until the event loop or render cycle ends.
 
-#### State Queue Mechanics
+### State Queue Mechanics
 
 * React maintains an internal queue of state updates.
 
@@ -1830,7 +1830,7 @@ This approach leads to better separation of concerns, maintainability, and perfo
 
 * After the current event handler completes, React processes this queue and applies updates in order.
 
-#### What Happens with Regular Updates?
+### What Happens with Regular Updates?
 ```
 setCount(count + 1);
 setCount(count + 1);
@@ -1839,7 +1839,7 @@ setCount(count + 1);
 *Both use the stale value of count.*
 *They both calculate count + 1 as 1, so React ends up setting count = 1 after both calls.*
 
-##### How to Fix: Use Function Updater:
+### How to Fix: Use Function Updater:
 ```
 setCount(prev => prev + 1);
 setCount(prev => prev + 1);
@@ -1851,7 +1851,7 @@ setCount(prev => prev + 1);
 *Second: prev = 1 → 2*
 *Final count = 2*
 
-##### Key Reasons Why React Uses Asynchronous Updates:
+### Key Reasons Why React Uses Asynchronous Updates:
 
 **Batching:**
 
@@ -1867,7 +1867,7 @@ Ensures all state updates are processed predictably after the event loop.
 
 Using updater functions avoids bugs from stale values during re-renders.
 
-##### How to Observe This?
+### How to Observe This?
 
 Use useEffect to track when the state actually updates:
 
@@ -1877,7 +1877,7 @@ useEffect(() => {
 }, [count]);
 ```
 
-##### Best Practice for Dependent Updates:
+### Best Practice for Dependent Updates:
 
 Always use the function updater when the next state depends on the previous one:
 
@@ -1887,7 +1887,7 @@ setState(prev => prev + 1);
 
 ---
 
-# Controlled vs Uncontrolled Components in React
+# 3️⃣9️⃣ Controlled vs Uncontrolled Components in React
 
 ### Controlled Components
 
@@ -1931,3 +1931,51 @@ setState(prev => prev + 1);
 Controlled components provide **predictability and control** by centralizing state, enabling multiple components to work together seamlessly. Uncontrolled components offer **simplicity and encapsulation**, suitable for independent pieces of UI where coordination is unnecessary.
 
 ---
+
+
+
+Top Scenario-Based React hashtag#Interview Questions
+
+1. How to display dynamic html data in react ?
+2. How do you send data from parent component to child component in react ?
+3. How to call parent component method from child component in react ?
+4. How do you access the dom element ?
+5. How to bind array/array of objects to dropdown in react ?
+6. Create a lazy loaded component in react ?
+7. How to display data entered by the user in another textbox ?
+8. How to loop array/array of objects in react ?
+9. How to conditionally render an element or text in react ?
+10. How to change styles based on condition in react ?
+11. How to dhow and hide data based on condition in react ?
+12.Bind array/array of objects to radio button in react ?
+13.Display radio button data selected by user in another textbox ?
+14. How to call a method when component is rendered for the first time in react ?
+15.Display keys and values of objects in a loop in react?
+16. How to rerender a component on value change in react ?
+17. How to call a method on every rerender of a component ?
+18. How to add data into useState array in functional component in react ?
+19. Create a search textbox filter ?
+20.Create a counter component using useState ?
+21.Create a counter component using useReducer ?
+22.Change focus/enable/disable textbox in child component based on parent component button click ? 
+23. How to perform debouncing ?
+24.Create a component to fetch data from api ?
+25.Force a component to rerender with out using useState in react ?
+26. How to call a method immediately after state is updated or 
+after component is rerendered ?
+27. How to display number of characters remaining functionality for textarea using react useRef?
+28.Given two dropdowns, select 2nd dropdown options based on value selected in one dropdown ?
+(Load states based on country selected)
+29.Perform type checking using prop-types ?
+30.Share data between components using context api ?
+31.Give an example of optimization using useMemo ?
+32.Give an example of optimization using usecallbacks in react ?
+33.Create an error boundary component in react ?
+34. How to display dropdown value selected by user in another textbox ?
+35.Create a pure component ?
+36.Create a controlled and uncontrolled component in react ?
+37.Create a custom hook using ?
+38.Create a popup using portal ?
+39.Which lifecycle hooks in class component are replaced with useEffect in functional components ? 
+40.Create a pagination component ?
+41. How do you safeguard your application ?
