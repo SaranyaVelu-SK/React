@@ -4,6 +4,7 @@ import Header from "./header";
 import Pagination from "./Problems/Pagination";
 import AutocompleteSearchBar from "./Problems/AutocompleteSearchBar";
 import Accordion from "./Problems/Accordion";
+import TodoList from "./Problems/TodoList";
 
   const items = [
   {
@@ -29,4 +30,4 @@ const header  = React.createElement("div",{className:"title"},[
     React.createElement("h3",{key:"h3"},"Hello from heading 3"),
 ])
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<Accordion items={items}/>);
+root.render(<TodoList/>);
