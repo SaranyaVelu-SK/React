@@ -5,6 +5,7 @@ import Pagination from "./Problems/Pagination";
 import AutocompleteSearchBar from "./Problems/AutocompleteSearchBar";
 import Accordion from "./Problems/Accordion";
 import TodoList from "./Problems/TodoList";
+import DarkModeToggle from "./Problems/DarkModeToggle";
 
   const items = [
   {
@@ -30,4 +31,4 @@ const header  = React.createElement("div",{className:"title"},[
     React.createElement("h3",{key:"h3"},"Hello from heading 3"),
 ])
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<TodoList/>);
+root.render(<DarkModeToggle/>);
