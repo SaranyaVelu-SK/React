@@ -115,15 +115,15 @@
     A key difference between the two is Inversion of control. When using a library, the control remains with the developer who tells the application when to call library functions. When using a framework, the control is reversed, which means that the framework tells the developer where code needs to be provided and calls it as it requires.
 
 # 1️⃣0️⃣ NPM:
+  - npm is a package manager for the JavaScript programming language maintained by npm, Inc., a subsidiary of GitHub.
+  - npm is the default package manager for the JavaScript runtime environment Node.js and is included as a recommended feature in the Node.js installer.
+  - It consists of a command line client, also called npm, and an online database of public and paid-for private packages, called the npm registry.
+  - The registry is accessed via the client, and the available packages can be browsed and searched via the npm website. 
+  - The package manager and the registry are managed by npm, Inc.
 
-    npm is a package manager for the JavaScript programming language maintained by npm, Inc., a subsidiary of GitHub. npm is the default package manager for the JavaScript runtime environment Node.js and is included as a recommended feature in the Node.js installer.[4]
-
-    It consists of a command line client, also called npm, and an online database of public and paid-for private packages, called the npm registry. The registry is accessed via the client, and the available packages can be browsed and searched via the npm website. The package manager and the registry are managed by npm, Inc.
-
-# 1️⃣1️⃣ npm init <initializer> vs npm init
-
-    npm init <initializer> ---> uses create-<initializer> package to create a new project; npm init <initializer> runs as npx create-<initailzer> name_of_the_project
-    This will automatically setup the basic structure(necessary project files) of project so that developers won't need to create it from scratch.
+# 1️⃣1️⃣ npm init <initializer> vs npm init:
+  - **npm init <initializer>** ---> uses create-<initializer> package to create a new project; npm init <initializer> runs as **npx create-<initailzer> name_of_the_project**
+  - This will automatically setup the basic structure(necessary project files) of project so that developers won't need to create it from scratch.
 
     Ex: npm init react-app my-app ➡️ npx create-react-app my-app ➡️ creates a basic react project structure
         my-app/
@@ -133,19 +133,18 @@
             ├── package.json
             ├── .gitignore
             ├── README.md
-    npm init  ---> The command npm init is used to create a new package.json file for your project, which is essential for managing dependencies and scripts. Its like creating a project structure but with no packages to install( or like initializing create-  nothing)
+    npm init  ---> The command npm init is used to create a new package.json file for your project, which is essential for managing dependencies and scripts.
+    Its like creating a project structure but with no packages to install( or like initializing create-  nothing)
 
 # 1️⃣2️⃣ Package.json
 
     package.json is a configuration file in a Node.js project that stores important project information such as:
 
-        Project metadata (name, version, description, author, etc.).
+  1. Project metadata (name, version, description, author, etc.).
+  2. Dependencies (packages needed for the project).
+  3. Scripts (commands to run tasks like starting a server).
 
-        Dependencies (packages needed for the project).
-
-        Scripts (commands to run tasks like starting a server).
-
-    USES:
+  USES:
 
         ✅ Manages dependencies → Keeps track of installed packages.
         ✅ Automates scripts → Simplifies commands like npm start or npm test.
@@ -153,9 +152,9 @@
         ✅ Version control → Helps maintain package versions.
 
     
-    No package.json	➡️ npm does nothing and shows a warning.
-    Empty package.json	➡️ npm does nothing but creates node_modules/ and package-lock.json.
-    package.json with dependencies	➡️ npm installs dependencies into node_modules/.
+  -  No package.json	➡️ npm does nothing and shows a warning.
+  - Empty package.json	➡️ npm does nothing but creates node_modules/ and package-lock.json.
+  - package.json with dependencies	➡️ npm installs dependencies into node_modules/.
 
 # 1️⃣3️⃣ Tilde (~) vs. Caret (^) in package.json
 
@@ -191,7 +190,8 @@
 
 # 1️⃣4️⃣ Package-lock.json
 
-    package-lock.json is an automatically generated file that locks the exact versions of installed dependencies. It ensures that everyone working on a project gets the same versions of packages.
+    package-lock.json is an automatically generated file that locks the exact versions of installed dependencies.
+  -  It ensures that everyone working on a project gets the same versions of packages.
 
     If you change dependencies in package.json, npm updates package-lock.json when running npm install.
 
@@ -227,26 +227,26 @@
 # 1️⃣7️⃣ PARCEL - The Beast
 
     Characteristics / features / Uses of parcel
-    1. zero config ➡️ No need of any configuration setups to execute parcel - just npx parcel index.html will build the app
-    2. Dev server ➡️ Parcel’s builtin dev server is automatically started when you run the default parcel command. By default, it starts a server at http://localhost:1234. If port 1234 is already in use, then a fallback port will be used.
-    3. HMR (Hot Module Replacement) ➡️ As you make changes to your code, Parcel automatically rebuilds the changed files and updates your app in the browser. By default, Parcel fully reloads the page, but in some cases it may perform Hot Module Replacement (HMR). HMR improves the development experience by updating modules in the browser at runtime without needing a whole page refresh. This means that application state can be retained as you change small things in your code.CSS changes are automatically applied via HMR with no page reload necessary. 
-    There is File Watcher Algorithm (written in C++). It keeps track of all the files which are changing realtime and it tells the server to reload.
-    4. Diagnostics ➡️ If you make an error in your code or configuration, Parcel displays beautiful diagnostics in your terminal and in the browser.
-    5.Reliable caching ➡️ Parcel automatically tracks all of the files, configuration, plugins, and dev dependencies that are involved in your build, and granularly invalidates the cache when something changes. It integrates with low-level operating system APIs to determine what files have changed in milliseconds, no matter the project size.
-    6.Lazy dev builds ➡️ In development, Parcel can defer building files until they are requested in the browser.
-    7. TREE SHAKING (Imp) ➡️ In production builds, Parcel statically analyzes the imports and exports of each module, and removes everything that isn't used. This is called "tree shaking" or "dead code elimination". Tree shaking is supported for both static and dynamic import(), CommonJS and ES modules, and even across languages with CSS modules.Parcel also concatenates modules into a single scope when possible, rather than wrapping each module in a separate function. This is called “scope hoisting”. This helps make minification more effective, and also improves runtime performance by making references between modules static rather than dynamic object lookups.
-    8.Minification ➡️ Parcel includes minifiers for JavaScript, CSS, HTML, and SVG out of the box. Minification reduces the file size of your output bundles by removing whitespace, renaming variables to shorter names, and many other optimizations.By default, minification is enabled when using the parcel build command. You can use the --no-optimize CLI flag to disable minification and other optimizations if needed.
-    9.Image Optimization ➡️ Parcel supports resizing, converting, and optimizing images! Just pass query parameters for the format and size you need when referencing the image file in your HTML, CSS, JavaScript, etc. and Parcel will take care of the conversion and optimization process.
-    10.Code Splitting ➡️ When multiple parts of your application depend on the same common modules, they are automatically deduplicated into a separate bundle. This allows commonly used dependencies to be loaded in parallel with your application code and cached separately by the browser!.Code splitting is also supported for CSS. 
-    11.Content Hashing ➡️Parcel automatically includes content hashes in the names of all output files. This enables long-term browser caching, because the output is guaranteed not to change unless the name does.
-    12.Transpilation ➡️ Parcel transpiles your JavaScript and CSS for your target browsers automatically! Just declare a browserslist in your package.json, and Parcel takes care of transpiling only what's needed.
-    13. Differential Bundling ➡️ When you use <script type="module">, Parcel automatically generates a nomodule fallback for old browsers as well, depending on your browser targets.This results in much smaller bundles for a majority of users in modern browsers, while still supporting older browsers as well!
+  1. zero config ➡️ No need of any configuration setups to execute parcel - just npx parcel index.html will build the app
+  2. Dev server ➡️ Parcel’s builtin dev server is automatically started when you run the default parcel command. By default, it starts a server at http://localhost:1234. If port 1234 is already in use, then a fallback port will be used.
+  3. HMR (Hot Module Replacement) ➡️ As you make changes to your code, Parcel automatically rebuilds the changed files and updates your app in the browser. By default, Parcel fully reloads the page, but in some cases it may perform Hot Module Replacement (HMR). HMR improves the development experience by updating modules in the browser at runtime without needing a whole page refresh. This means that application state can be retained as you change small things in your code.CSS changes are automatically applied via HMR with no page reload necessary. There is File Watcher Algorithm (written in C++). It keeps track of all the files which are changing realtime and it tells the server to reload.
+  4. Diagnostics ➡️ If you make an error in your code or configuration, Parcel displays beautiful diagnostics in your terminal and in the browser.
+  5. Reliable caching ➡️ Parcel automatically tracks all of the files, configuration, plugins, and dev dependencies that are involved in your build, and granularly invalidates the cache when something changes. It integrates with low-level operating system APIs to determine what files have changed in milliseconds, no matter the project size.
+  6. Lazy dev builds ➡️ In development, Parcel can defer building files until they are requested in the browser.
+  7. TREE SHAKING (Imp) ➡️ In production builds, Parcel statically analyzes the imports and exports of each module, and removes everything that isn't used. This is called "tree shaking" or "dead code elimination". Tree shaking is supported for both static and dynamic import(), CommonJS and ES modules, and even across languages with CSS modules.Parcel also concatenates modules into a single scope when possible, rather than wrapping each module in a separate function. This is called “scope hoisting”. This helps make minification more effective, and also improves runtime performance by making references between modules static rather than dynamic object lookups.
+  8. Minification ➡️ Parcel includes minifiers for JavaScript, CSS, HTML, and SVG out of the box. Minification reduces the file size of your output bundles by removing whitespace, renaming variables to shorter names, and many other optimizations.By default, minification is enabled when using the parcel build command. You can use the --no-optimize CLI flag to disable minification and other optimizations if needed.
+  9. Image Optimization ➡️ Parcel supports resizing, converting, and optimizing images! Just pass query parameters for the format and size you need when referencing the image file in your HTML, CSS, JavaScript, etc. and Parcel will take care of the conversion and optimization process.
+  10. Code Splitting ➡️ When multiple parts of your application depend on the same common modules, they are automatically deduplicated into a separate bundle. This allows commonly used dependencies to be loaded in parallel with your application code and cached separately by the browser!.Code splitting is also supported for CSS. 
+  11. Content Hashing ➡️Parcel automatically includes content hashes in the names of all output files. This enables long-term browser caching, because the output is guaranteed not to change unless the name does.
+  12. Transpilation ➡️ Parcel transpiles your JavaScript and CSS for your target browsers automatically! Just declare a browserslist in your package.json, and Parcel takes care of transpiling only what's needed.
+  13. Differential Bundling ➡️ When you use <script type="module">, Parcel automatically generates a nomodule fallback for old browsers as well, depending on your browser targets.This results in much smaller bundles for a majority of users in modern browsers, while still supporting older browsers as well!
 
-    npx parcel index.html(for dev build) , npx parcel build index.html(for prod build)
+    *npx parcel index.html(for dev build) , npx parcel build index.html(for prod build)*
 
 # 1️⃣8️⃣ Dist folder
      once the build is done - whatever we are seeing in browser comes from the dist folder - not from the files(like index.html or app.js) - everytime build is done - dist folder is regenerated. (since so, exclude it from adding to github - put it in .gitignore file)
-     It keeps the files minified for us. When bundler builds the app, the build goes into a folder called dist. The `/dist` folder contains the minimized and optimised version the source code.
+     It keeps the files minified for us. When bundler builds the app, the build goes into a folder called dist. 
+     The `/dist` folder contains the minimized and optimised version the source code.
 
      Also, .parcel-cache folder is created - parcel enables faster dev builds because of caching   - it is also regenerable at every build 
      ❌❌❌❌❌❌❌(imp) ➡️ parcel-cache is used by parcel(bundler) to reduce the building time. It stores information about your project when parcel builds it, so that when it rebuilds, it doesn't have to re-parse and re-analyze everything from scratch. ❌❌❌❌❌❌❌
