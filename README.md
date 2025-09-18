@@ -284,18 +284,18 @@
     🔺Upon rendering, ReactDOM takes react element and turns it into HTML nad sends to browser
     🔺Element rendered( heading element) replaces (❌NOT APPENDED❌) the <h1> tag inside the <div> that has id = "root"
 
-    TL;DR ➡️ A React element is a JavaScript object that tells React what to render and how it should look.A React element is not the same as a DOM element (it’s just a description of what should be rendered).
+     A React element is a JavaScript object that tells React what to render and how it should look.A React element is not the same as a DOM element (it’s just a description of what should be rendered).
 
     React elements are immutable. Once created, they can’t be changed. This immutability helps React do fast comparisons during rendering because it knows any change requires a new object. This makes UIs more predictable and improves performance with techniques like memoization and pure rendering.
     
 
 # 2️⃣1️⃣ HTML Elements vs React Elements
 
-    React elements are not actual DOM nodes, but plain JavaScript objects that describe what should appear on the screen. They're created via JSX or React.createElement() and are used by React’s virtual DOM for efficient updates.
+  - React elements are not actual DOM nodes, but plain JavaScript objects that describe what should appear on the screen. They're created via JSX or React.createElement() and are used by React’s virtual DOM for efficient updates.
 
-    In contrast, HTML elements are the actual DOM nodes rendered in the browser.
+  - In contrast, HTML elements are the actual DOM nodes rendered in the browser.
 
-    The actual rendering of React elements into HTML elements is handled by ReactDOM, which compares the virtual DOM to the real DOM and updates only what’s necessary.
+  - The actual rendering of React elements into HTML elements is handled by ReactDOM, which compares the virtual DOM to the real DOM and updates only what’s necessary.
 
 # 2️⃣2️⃣ JSX:
 
@@ -325,15 +325,15 @@
 
                             SWC / esbuild / Vite — newer, faster transpilers
 
-        📍 Parcel is like a manager who gives the responsibility of transpilation to a package called Babel.
+- Parcel is like a manager who gives the responsibility of transpilation to a package called Babel.
 
-        📍 Babel is a package that is a compiler/transpiler of JavaScript that is already present inside ‘node-modules’ which is depended by parcel, so upon installing parcel bable is installed as its dependency(transitive dependency). It takes JSX and converts it into the code that browsers understand, as soon as we write it and save the file. It is not created by Facebook.
+- Babel is a package that is a compiler/transpiler of JavaScript that is already present inside ‘node-modules’ which is depended by parcel, so upon installing parcel bable is installed as its dependency(transitive dependency). It takes JSX and converts it into the code that browsers understand, as soon as we write it and save the file. It is not created by Facebook.
         
-        JSX (transpiled by Babel) ⇒ React.createElement ⇒ ReactElement ⇒ JS Object ⇒ HTML Element(render)
+- JSX (transpiled by Babel) ⇒ React.createElement ⇒ ReactElement ⇒ JS Object ⇒ HTML Element(render)
 
-    Single Line and Multi Line JSX Code
+- Single Line and Multi Line JSX Code
     
-        Single line code:
+        ```Single line code:
             const jsxHeading = <h1>Namaste React</h1>
             
         Multi-line code:
@@ -342,16 +342,16 @@
                     <div>
                     <h1>Namaste React</h1>
                     </div>
-                    )
-    Advantages of JSX: (FROM Namaste React):
+                    )```
+- Advantages of JSX: (FROM Namaste React):
 
-        1) Sanitizes the data
+  1. Sanitizes the data
             If someone gets access to your JS code and sends some malicious data which will then get displayed on the screen, that attack is called cross-site scripting. It can read cookies, local storage, session storage, get cookies, get info about your device, and read data. JSx takes care of your data.
             If some API passes some malicious data JSX will escape it. It prevents cross-site scripting and sanitizes the data before rendering
-        2) Makes code readable JSX makes it easier to write code as we are no longer creating elements using React.createElement()
-        3) Makes code simple and elegant
-        4) Show more useful errors and warnings
-        5) JSX prevents code injections (attacks)
+        2. Makes code readable JSX makes it easier to write code as we are no longer creating elements using React.createElement()
+        3. Makes code simple and elegant
+        4. Show more useful errors and warnings
+        5. JSX prevents code injections (attacks)
 
 # 2️⃣3️⃣ React Components
 
