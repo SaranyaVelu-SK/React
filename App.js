@@ -7,6 +7,7 @@ import Accordion from "./Problems/Accordion";
 import TodoList from "./Problems/TodoList";
 import DarkModeToggle from "./Problems/DarkModeToggle";
 import ChipsInput from "./Problems/ChipsInput";
+import TabSwitch from "./Problems/Tab-Form-Component/TabSwitch";
 
   const items = [
   {
@@ -26,10 +27,12 @@ import ChipsInput from "./Problems/ChipsInput";
     content: "Build full-stack apps with React and Node.js."
   },
 ];
+
+
 const header  = React.createElement("div",{className:"title"},[
     React.createElement("h1",{key:"h1"},"Hello from heading 1"),
     React.createElement("h2",{key:"h2"},"Hello from heading 2"),
     React.createElement("h3",{key:"h3"},"Hello from heading 3"),
 ])
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<Accordion items={items} />);
+root.render(<TabSwitch />);
