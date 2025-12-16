@@ -32,4 +32,4 @@ const header  = React.createElement("div",{className:"title"},[
     React.createElement("h3",{key:"h3"},"Hello from heading 3"),
 ])
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<ChipsInput/>);
+root.render(<Accordion items={items} />);
