@@ -5,9 +5,11 @@ import Pagination from "./Problems/Pagination";
 import AutocompleteSearchBar from "./Problems/AutocompleteSearchBar";
 import Accordion from "./Problems/Accordion";
 import TodoList from "./Problems/TodoList";
-import DarkModeToggle from "./Problems/DarkModeToggle";
+// import DarkModeToggle from "./Problems/DarkModeToggle";
 import ChipsInput from "./Problems/ChipsInput";
 import TabSwitch from "./Problems/Tab-Form-Component/TabSwitch";
+import ThemeProvider from "./Problems/ThemeToggle/ThemeProvider";
+import ToggleTheme from "./Problems/ThemeToggle/ThemeToggle";
 
   const items = [
   {
@@ -28,11 +30,17 @@ import TabSwitch from "./Problems/Tab-Form-Component/TabSwitch";
   },
 ];
 
-
+const App =() =>{
+  return (
+    <ThemeProvider>
+      <ToggleTheme /> 
+    </ThemeProvider>
+  )
+}
 const header  = React.createElement("div",{className:"title"},[
     React.createElement("h1",{key:"h1"},"Hello from heading 1"),
     React.createElement("h2",{key:"h2"},"Hello from heading 2"),
     React.createElement("h3",{key:"h3"},"Hello from heading 3"),
 ])
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<TabSwitch />);
+root.render(<App />);
