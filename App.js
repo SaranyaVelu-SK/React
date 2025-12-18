@@ -10,7 +10,7 @@ import ChipsInput from "./Problems/ChipsInput";
 import TabSwitch from "./Problems/Tab-Form-Component/TabSwitch";
 import ThemeProvider from "./Problems/ThemeToggle/ThemeProvider";
 import ToggleTheme from "./Problems/ThemeToggle/ThemeToggle";
-
+import Counter from './Problems/Counter';
   const items = [
   {
     title: "JavaScript Basics",
@@ -43,4 +43,4 @@ const header  = React.createElement("div",{className:"title"},[
     React.createElement("h3",{key:"h3"},"Hello from heading 3"),
 ])
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<App />);
+root.render(<Counter/>);

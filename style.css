@@ -97,3 +97,50 @@ justify-content: center;
   height: 100vh;
   width:100%;
 }
+
+.counterContainer{
+  display:flex;
+  flex-direction: column;
+  margin-top: 40px;
+  align-items: center;
+}
+
+.counterContainer h1{
+  color:rgb(20, 98, 177);
+}
+.counterContainer label{
+  color:rgb(6, 116, 160);
+  font-size: 30px;
+  margin:12px;
+}
+.counterContainer input{
+  border:none;
+  border-bottom:4px solid black;
+  border-radius: 5px;
+  padding:20px;
+  font-size: 20px;
+  width:3%;
+  background-color: palevioletred;
+}
+.counterBtns{
+  display:flex;
+  margin-top: 90px;
+  gap:20px;
+}
+.counterBtns button{
+  padding:15px;
+  font-size: 20px;
+  width:50%;
+  border:none;
+  border-radius:5px;
+  color:white;
+  cursor:pointer;
+}
+#count{
+  color: #094a70;
+  font-size: 50px;  
+}
+#error{
+  color:red;
+  font-size:40px;
+}
